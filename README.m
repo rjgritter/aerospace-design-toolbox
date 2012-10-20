@@ -9,24 +9,34 @@ myST = parseST('./sampleData/plane1690.st')
 %Access any data field like this:
 myST.CLa
 
+%Control surface information is availabe in the surface section
+surfName = myST.surface(1).name;
+fprintf(1,'The name of the control surface is "%s"\n', surfName);
+
 %parseSB similar to parseST but for SB files
 mySB = parseSB('./sampleData/plane2243.sb')
 
 %Access any data field like this:
 mySB.CXu
 
-%The parseRunCase and parse Config functions work on ST, SB, and other AVL
+%The parseRunCaseHeader and parse Config functions work on ST, SB, and other AVL
 %generated files
-runCaseST = parseRunCase('./sampleData/plane1690.st')
+runCaseST = parseRunCaseHeader('./sampleData/plane1690.st')
 myConfigST = parseConfig('./sampleData/plane1690.st')
 
 fprintf(1,'This aircraft was analyzed at an alpha of %f \n', runCaseST.alpha);
 
-runCaseSB = parseRunCase('./sampleData/plane2243.sb');
+runCaseSB = parseRunCaseHeader('./sampleData/plane2243.sb');
 myConfigSB = parseConfig('./sampleData/plane2243.sb');
 
 fprintf(1,'This next aircraft was analyzed at an alpha of %f \n', runCaseSB.alpha);
 fprintf(1,'It has a S reference area of %f \n', myConfigSB.Sref);
+
+%parseRunCaseFile
+%loads all run-case data from a run-case file
+runCases = parseRunCaseFile('./sampleData/rc43.run');
+runCases
+fprintf(1,'The first run-case is "%s" \n', runCases(1).name);
 
 %% Intermediate
 % The parseSF function loads data from a strip forces output file "SF"
